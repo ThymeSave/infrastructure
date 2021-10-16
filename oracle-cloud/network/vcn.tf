@@ -5,6 +5,19 @@ resource "oci_core_vcn" "thymesave" {
   dns_label      = "thymesave"
 }
 
+resource "oci_core_default_dhcp_options" "thymesave" {
+  manage_default_resource_id = oci_core_vcn.thymesave.default_dhcp_options_id
+  options {
+    type = "DomainNameServer"
+    server_type = "VcnLocalPlusInternet"
+  }
+
+  options {
+    type = "SearchDomain"
+    search_domain_names = [ "thymesave.local" ]
+  }
+}
+
 resource "oci_core_internet_gateway" "this" {
   compartment_id = var.compartment_id
   display_name   = "internet-gateway"
