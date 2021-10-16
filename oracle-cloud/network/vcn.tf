@@ -1,9 +1,3 @@
-locals {
-  subnet_private_cidr = "10.1.0.0/25"
-  subnet_public_cidr  = "10.1.0.128/25"
-  vcn_cidr            = "10.1.0.0/24"
-}
-
 resource "oci_core_vcn" "thymesave" {
   cidr_block     = local.vcn_cidr
   compartment_id = var.compartment_id

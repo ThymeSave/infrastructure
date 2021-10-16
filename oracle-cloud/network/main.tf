@@ -24,7 +24,18 @@ data "oci_objectstorage_namespace" "this" {
   compartment_id = var.compartment_id
 }
 
-data "oci_identity_availability_domain" "ad2" {
+data "oci_identity_availability_domains" "this" {
   compartment_id = var.compartment_id
-  ad_number      = 2
+}
+
+locals {
+  vcn_cidr     = "10.1.0.0/24"
+  private_cidr = "10.1.0.0/26"
+  public_cidr  = "10.1.0.64/26"
+  bastion_cidr = "10.1.0.128/26"
+  // .. free: 10.1.0.192/26
+
+  // Create one subnet for each availability domain
+  private_subnets = cidrsubnets(local.private_cidr, 4, 4, 4)
+  public_subnets  = cidrsubnets(local.public_cidr, 4, 4, 4)
 }

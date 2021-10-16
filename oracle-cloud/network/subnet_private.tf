@@ -1,8 +1,9 @@
 resource "oci_core_subnet" "private" {
-  availability_domain = data.oci_identity_availability_domain.ad2.name
-  cidr_block          = local.subnet_private_cidr
-  display_name        = "private"
-  dns_label           = "private"
+  count               = length(local.private_subnets)
+  availability_domain = data.oci_identity_availability_domains.this.availability_domains[count.index].name
+  cidr_block          = local.private_subnets[count.index]
+  display_name        = "private${count.index + 1}"
+  dns_label           = "private${count.index + 1}"
   security_list_ids   = [oci_core_security_list.private.id]
   compartment_id      = var.compartment_id
   vcn_id              = oci_core_vcn.thymesave.id
@@ -11,7 +12,7 @@ resource "oci_core_subnet" "private" {
 }
 
 resource "oci_core_security_list" "private" {
-  display_name   = "Security List for private subnet"
+  display_name   = "Security List for private subnets"
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.thymesave.id
 
@@ -23,7 +24,7 @@ resource "oci_core_security_list" "private" {
 
   // allow ping
   ingress_security_rules {
-    source   = local.subnet_private_cidr
+    source   = local.private_cidr
     protocol = "1"
 
     icmp_options {
@@ -33,7 +34,7 @@ resource "oci_core_security_list" "private" {
 
   // allow ssh from bastion hosts
   ingress_security_rules {
-    source   = local.subnet_private_cidr
+    source   = local.bastion_cidr
     protocol = "6"
     tcp_options {
       min = 22
