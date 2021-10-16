@@ -31,6 +31,11 @@ resource "oci_core_security_list" "public" {
       type = 3
     }
   }
+  // allow communication between public subnets
+  ingress_security_rules {
+    protocol = "all"
+    source   = local.public_cidr
+  }
 
   // allow ssh from bastion hosts
   ingress_security_rules {

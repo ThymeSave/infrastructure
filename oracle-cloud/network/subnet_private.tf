@@ -32,6 +32,12 @@ resource "oci_core_security_list" "private" {
     }
   }
 
+  // allow communication between private subnets
+  ingress_security_rules {
+    protocol = "all"
+    source   = local.private_cidr
+  }
+
   // allow ssh from bastion hosts
   ingress_security_rules {
     source   = local.bastion_cidr
