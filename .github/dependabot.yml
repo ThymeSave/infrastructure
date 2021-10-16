@@ -12,3 +12,9 @@ updates:
       interval: weekly
     reviewers:
       - thymesave/core
+  - package-ecosystem: terraform
+    directory: /oracle-cloud/network
+    schedule:
+      interval: weekly
+    reviewers:
+      - thymesave/core
