@@ -7,13 +7,25 @@ updates:
     reviewers:
       - thymesave/core
   - package-ecosystem: terraform
-    directory: /oracle-cloud/terraform-state-bucket
+    directory: /oracle-cloud/bastion
+    schedule:
+      interval: weekly
+    reviewers:
+      - thymesave/core
+  - package-ecosystem: terraform
+    directory: /oracle-cloud/compute
     schedule:
       interval: weekly
     reviewers:
       - thymesave/core
   - package-ecosystem: terraform
     directory: /oracle-cloud/network
+    schedule:
+      interval: weekly
+    reviewers:
+      - thymesave/core
+  - package-ecosystem: terraform
+    directory: /oracle-cloud/terraform-state-bucket
     schedule:
       interval: weekly
     reviewers:
