@@ -6,6 +6,22 @@ infrastructure
 
 This repository contains all infrastructure we use to run ThymeSave as a managed service.
 
+## Providers we use
+
+### CloudFlare
+
+Battle proven DNS and DDOS protection. There service is free and they
+also offer SSL termination out of the box.
+
+### Oracle Cloud
+
+Oracle Cloud provides a [Free Tier](https://www.oracle.com/cloud/free/)
+that allows us to run in an cloud environment with failure resilence and
+use clustering. And the best of all: its completely free!
+
+At the time of creating the project knowledge inside the ThymeSave org
+is very limited, so things are subject to change and improvements.
+
 ## Development
 
 ### Required tools
