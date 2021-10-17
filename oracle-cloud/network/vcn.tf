@@ -11,11 +11,6 @@ resource "oci_core_default_dhcp_options" "thymesave" {
     type = "DomainNameServer"
     server_type = "VcnLocalPlusInternet"
   }
-
-  options {
-    type = "SearchDomain"
-    search_domain_names = [ "thymesave.local" ]
-  }
 }
 
 resource "oci_core_internet_gateway" "this" {

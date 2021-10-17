@@ -22,6 +22,8 @@ use clustering. And the best of all: its completely free!
 At the time of creating the project knowledge inside the ThymeSave org
 is very limited, so things are subject to change and improvements.
 
+> Because of the free tier we are limited on how we can build infrastructure, so please keep this in mind :)
+
 ## Development
 
 ### Required tools
