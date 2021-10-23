@@ -1,0 +1,11 @@
+# {{ ansible_managed }}!
+version: '2.1'
+services:
+    couchdb:
+        image: couchdb:{{ couchdb_version }}
+        restart: unless-stopped
+        environment:
+          COUCHDB_USER: admin
+          COUCHDB_PASSWORD: {{ couchdb_password }}
+        ports:
+          - "127.0.0.1:5984:5984"

@@ -1,0 +1,17 @@
+- name: Ensure couchdb installation directory exists
+  ansible.builtin.file:
+    path: "{{ couchdb_install_dir }}"
+    owner: "{{ couchdb_user }}"
+    group: "{{ couchdb_group }}"
+    mode: '755'
+    state: directory
+  become: true
+- name: Create docker-compose config
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ couchdb_install_dir }}/docker-compose.yml"
+    owner: "{{ couchdb_group }}"
+    group: "{{ couchdb_user }}"
+    mode: '644'
+  become: true
+  notify: restart couchdb

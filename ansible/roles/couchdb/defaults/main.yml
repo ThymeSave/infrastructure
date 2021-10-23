@@ -1,0 +1,5 @@
+couchdb_version: "latest"
+couchdb_install_dir: "/opt/couchdb"
+couchdb_user: opc
+couchdb_group: opc
+couchdb_password: s3cr3t
