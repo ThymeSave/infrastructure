@@ -1,0 +1,6 @@
+# Terraform
+.terraform/
+.terraform.lock.hcl
+
+# S3 credentials
+state_credentials.ini

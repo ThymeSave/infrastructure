@@ -4,60 +4,41 @@ infrastructure
 [![pre-commit](https://img.shields.io/badge/%E2%9A%93%20%20pre--commit-enabled-success)](https://pre-commit.com/)
 [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 
-This repository contains all infrastructure we use to run ThymeSave as a managed service.
+This mono repository contains all infrastructure we use to run ThymeSave as a managed service.
 
 ## Providers we use
 
 ### CloudFlare
 
-Battle proven DNS and DDOS protection. There service is free and they
-also offer SSL termination out of the box.
+Battle proven DNS and DDOS protection. There service is free and they also offer SSL termination out of the box.
 
 ### Oracle Cloud
 
 Oracle Cloud provides a [Free Tier](https://www.oracle.com/cloud/free/)
-that allows us to run in an cloud environment with failure resilence and
-use clustering. And the best of all: its completely free!
+that allows us to run in an cloud environment with failure resilence and use clustering. And the best of all: its
+completely free!
 
-At the time of creating the project knowledge inside the ThymeSave org
-is very limited, so things are subject to change and improvements.
+At the time of creating the project knowledge inside the ThymeSave org is very limited, so things are subject to change
+and improvements.
 
 > Because of the free tier we are limited on how we can build infrastructure, so please keep this in mind :)
 
 ## Development
 
-### Required tools
+This repository is categorized by technology `e.g. terraform` and modules underneath it. You can find detailed
+information about setup and execution in the top level folders:
 
+- [terraform](./terraform)
+- [ansible](./ansible)
+
+### Required Tools
+
+- [pre-commit](https://pre-commit.com/)
+- [Python 3](https://python.org)
 - [tfenv](https://github.com/tfutils/tfenv)
 - [tflint](https://github.com/terraform-linters/tflint)
 - [tfsec](https://github.com/aquasecurity/tfsec)
-- [pre-commit](https://pre-commit.com/)
-
-### Basic
-
-#### Setup
-
-1. Copy the state credentials config: `cp state_credentials.ini.example state_credentials.ini`
-2. Fill in your credentials
-
-#### Apply
-
-1. First setup module as described in the README
-2. Switch to module e. g. `cd cloudflare`
-3. Initialize terraform: `terraform init`
-4. Apply: `terraform apply`
-
-### Oracle cloud resources
-
-1. Go to oracle-cloud: `cd oracle-cloud`
-2. Copy the variables file `cp sample.tfvars local.tfvars`
-3. Replace the placeholders with your user specific variables
-
-### CloudFlare
-1. Go to cloudflare: `cd cloudflare`
-2. Copy the variables file `cp sample.tfvars local.tfvars`
-3. Replace the placeholders with your user specific variables
-
+- [Ansible 4.7](https://pypi.org/project/ansible/)
 
 ## Commit Message Convention
 
@@ -105,7 +86,6 @@ Add BREAKING CHANGE in the description if there is a significant change.
 - Use capitals in front of the sentence
 - Don't add full stop (.) at the end of the sentence
 
-
 ## Contributing
 
 ### [Code of Conduct](https://github.com/ThymeSave/funnel/blob/main/CODE-OF-CONDUCT.md)
@@ -115,4 +95,5 @@ that you can understand what actions will and will not be tolerated.
 
 ### Contributing guide
 
-For infrastructure there is no standardized way to contribute. If you feel like sth. could be improved feel free to create a ticket or pull request.
+For infrastructure there is no standardized way to contribute. If you feel like sth. could be improved feel free to
+create a ticket or pull request.

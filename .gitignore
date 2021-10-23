@@ -1,9 +1,2 @@
 # IDE
 .idea/
-
-# Terraform
-.terraform/
-.terraform.lock.hcl
-
-# Global credentials
-state_credentials.ini
