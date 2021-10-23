@@ -6,28 +6,19 @@
       ansible.builtin.yum:
         name: "*"
         state: latest
-      become: true
-    - name: Install Python 3.9
-      ansible.builtin.yum:
-        name: python39,python39-setuptools,python39-pip
-        state: present
-      become: true
-      tags:
-        - python
-    - name: Set Python 3.9 as default
-      community.general.alternatives:
-        name: python3
-        path: /usr/bin/python3.9
-      become: true
-      tags:
-        - python
+      become: yes
+
     - name: Install yum-utils
       ansible.builtin.yum:
         name: yum-utils
         state: present
-      become: true
-
+      become: yes
   roles:
+    - role: python3_setup
+      become: yes
+      tags:
+        - python
+
     - role: geerlingguy.docker
       docker_install_compose: true
       docker_edition: 'ce'
@@ -37,8 +28,17 @@
         log-opts:
           max-size: "50m"
       become: yes
+      tags:
+        - docker
     - role: geerlingguy.pip
       pip_install_packages:
         - name: docker
           state: latest
       become: yes
+      tags:
+        - docker
+    - role: setup_block_volume
+      block_volume_mount_point: /opt/couchdb/data
+      become: yes
+      tags:
+        - persistence

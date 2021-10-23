@@ -1,8 +1,19 @@
+- name: Ensure couchdb group exists
+  ansible.builtin.group:
+    name: "{{ couchdb_group }}"
+    gid: 5984
+  become: true
+- name: Ensure couchdb user exists
+  ansible.builtin.user:
+    name: "{{ couchdb_user }}"
+    uid: 5984
+    groups: couchdb
+  become: true
 - name: Ensure couchdb installation directory exists
   ansible.builtin.file:
     path: "{{ couchdb_install_dir }}"
-    owner: "{{ couchdb_user }}"
     group: "{{ couchdb_group }}"
+    owner: "{{ couchdb_user }}"
     mode: '755'
     state: directory
   become: true
@@ -10,8 +21,17 @@
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ couchdb_install_dir }}/docker-compose.yml"
-    owner: "{{ couchdb_group }}"
-    group: "{{ couchdb_user }}"
+    group: "{{ couchdb_group }}"
+    owner: "{{ couchdb_user }}"
     mode: '644'
   become: true
   notify: restart couchdb
+- name: Create required directories
+  ansible.builtin.file:
+    path: "{{ couchdb_install_dir }}/{{ item }}"
+    group: "{{ couchdb_group }}"
+    owner: "{{ couchdb_user }}"
+    mode: '755'
+    state: directory
+  with_items:
+    - config

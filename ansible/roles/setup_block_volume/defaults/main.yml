@@ -1,0 +1,5 @@
+block_volume_device: /dev/sdb
+block_volume_mount_point: /mnt/persistence
+block_volume_device_number: 1
+block_volume_user: opc
+block_volume_group: opc

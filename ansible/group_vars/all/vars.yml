@@ -4,3 +4,8 @@ docker_users:
 # docker-compose
 docker_compose_version: "v2.0.1"
 docker_compose_url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-linux-aarch64
+
+# block volume
+block_volume_device: /dev/sdb
+block_volume_user: opc
+block_volume_group: opc
