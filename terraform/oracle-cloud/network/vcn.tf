@@ -8,7 +8,7 @@ resource "oci_core_vcn" "thymesave" {
 resource "oci_core_default_dhcp_options" "thymesave" {
   manage_default_resource_id = oci_core_vcn.thymesave.default_dhcp_options_id
   options {
-    type = "DomainNameServer"
+    type        = "DomainNameServer"
     server_type = "VcnLocalPlusInternet"
   }
 }
