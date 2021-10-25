@@ -7,7 +7,7 @@ services:
       environment:
         COUCHDB_USER: {{ couchdb_admin_username }}
         COUCHDB_PASSWORD: {{ couchdb_admin_password_hashed }}
-        COUCHDB_SECRET: 0123456789abcdef0123456789abcdef
+        COUCHDB_SECRET: {{ couchdb_secret }}
         NODENAME: {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
       network_mode: host
       volumes:

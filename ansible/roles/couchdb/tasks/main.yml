@@ -54,6 +54,7 @@
   with_items:
     - log.ini
     - couch_peruser.ini
+    - proxy_auth.ini
   register: create_configs
 
 - name: Ensure couchdb is up
