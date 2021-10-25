@@ -1,0 +1,11 @@
+{
+    "action": "enable_cluster",
+    "bind_address":"0.0.0.0",
+    "username": "{{ couchdb_admin_username }}",
+    "password":"{{ couchdb_admin_password }}",
+    "port": 5984,
+    "node_count": "{{ couchdb_cluster_nodes | length }}",
+    "remote_node": "{{ item }}",
+    "remote_current_user": "{{ couchdb_admin_username }}",
+    "remote_current_password": "{{ couchdb_admin_password }}"
+}

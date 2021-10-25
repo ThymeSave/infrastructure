@@ -13,6 +13,13 @@
         name: yum-utils
         state: present
       become: yes
+
+    - name: Disable firewalld
+      ansible.builtin.systemd:
+        name: firewalld
+        state: stopped
+        enabled: no
+      become: yes
   roles:
     - role: python3_setup
       become: yes

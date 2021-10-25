@@ -5,10 +5,11 @@ services:
       image: couchdb:{{ couchdb_version }}
       restart: unless-stopped
       environment:
-        COUCHDB_USER: admin
-        COUCHDB_PASSWORD: {{ couchdb_password }}
-      ports:
-        - "127.0.0.1:5984:5984"
+        COUCHDB_USER: {{ couchdb_admin_username }}
+        COUCHDB_PASSWORD: {{ couchdb_admin_password_hashed }}
+        COUCHDB_SECRET: 0123456789abcdef0123456789abcdef
+        NODENAME: {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
+      network_mode: host
       volumes:
         - ./data:/opt/couchdb/data
         - ./config:/opt/couchdb/etc/local.d/
