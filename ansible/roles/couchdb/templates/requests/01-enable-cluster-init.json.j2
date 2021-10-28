@@ -1,0 +1,7 @@
+{
+    "username": "{{ couchdb_admin_username }}",
+    "password":"{{ couchdb_admin_password }}",
+    "action": "enable_cluster",
+    "bind_address":"0.0.0.0",
+    "node_count":"{{ couchdb_cluster_nodes | length }}"
+}

@@ -1,0 +1,25 @@
+- name: Create partition
+  community.general.parted:
+    device: "{{ block_volume_device }}"
+    number: "{{ block_volume_device_number }}"
+    state: present
+    fs_type: ext4
+    part_end: "100%"
+    resize: yes
+- name: Create filesystem
+  community.general.filesystem:
+    fstype: ext4
+    dev: "{{ block_volume_device }}{{ block_volume_device_number }}"
+- name: Mount partition
+  ansible.posix.mount:
+    path: "{{ block_volume_mount_point }}"
+    src: "{{ block_volume_device }}{{ block_volume_device_number }}"
+    fstype: ext4
+    state: mounted
+    boot: yes
+- name: Setup permissions
+  ansible.builtin.file:
+    path: "{{ block_volume_mount_point }}"
+    group: "{{ block_volume_group }}"
+    owner: "{{ block_volume_user }}"
+    mode: "700"

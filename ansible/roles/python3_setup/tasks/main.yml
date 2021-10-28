@@ -1,0 +1,8 @@
+- name: Install Python 3.9
+  ansible.builtin.yum:
+    name: python39,python39-setuptools,python39-pip
+    state: present
+- name: Set Python 3.9 as default
+  community.general.alternatives:
+    name: python3
+    path: /usr/bin/python3.9

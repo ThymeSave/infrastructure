@@ -1,0 +1,51 @@
+---
+- name: Base setup for all nodes
+  hosts: all
+  pre_tasks:
+    - name: Upgrade all packages
+      ansible.builtin.yum:
+        name: "*"
+        state: latest
+      become: yes
+
+    - name: Install yum-utils
+      ansible.builtin.yum:
+        name: yum-utils
+        state: present
+      become: yes
+
+    - name: Disable firewalld
+      ansible.builtin.systemd:
+        name: firewalld
+        state: stopped
+        enabled: no
+      become: yes
+  roles:
+    - role: python3_setup
+      become: yes
+      tags:
+        - python
+
+    - role: geerlingguy.docker
+      docker_install_compose: true
+      docker_edition: 'ce'
+      docker_service_state: started
+      docker_service_enabled: true
+      docker_daemon_options:
+        log-opts:
+          max-size: "50m"
+      become: yes
+      tags:
+        - docker
+    - role: geerlingguy.pip
+      pip_install_packages:
+        - name: docker
+          state: latest
+      become: yes
+      tags:
+        - docker
+    - role: setup_block_volume
+      block_volume_mount_point: /opt/couchdb/data
+      become: yes
+      tags:
+        - persistence

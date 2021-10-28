@@ -1,0 +1,15 @@
+# {{ ansible_managed }}!
+version: '2.1'
+services:
+    couchdb:
+      image: couchdb:{{ couchdb_version }}
+      restart: unless-stopped
+      environment:
+        COUCHDB_USER: {{ couchdb_admin_username }}
+        COUCHDB_PASSWORD: {{ couchdb_admin_password_hashed }}
+        COUCHDB_SECRET: {{ couchdb_secret }}
+        NODENAME: {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
+      network_mode: host
+      volumes:
+        - ./data:/opt/couchdb/data
+        - ./config:/opt/couchdb/etc/local.d/
