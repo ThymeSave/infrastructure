@@ -8,7 +8,7 @@
   ansible.builtin.user:
     name: "{{ couchdb_user }}"
     uid: 5984
-    groups: couchdb
+    groups: "{{ couchdb_group }}"
   become: true
 
 - name: Ensure couchdb installation directory exists

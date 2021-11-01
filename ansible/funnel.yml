@@ -1,0 +1,22 @@
+- name: Setup Funnel
+  hosts: all
+  roles:
+    - role: funnel
+      funnel_version: 0.0.2
+      funnel_checksum: 34b0c905c1cc8ad7bc1ed3c6d9500e9336596a85a18b38436fd34934e4096348
+      funnel_package_url: "https://github.com/ThymeSave/funnel/releases/download/{{ funnel_version }}/funnel_linux-arm64-{{ funnel_version }}"
+      funnel_configuration:
+        # web
+        port: 3000
+        cors_origins: "*"
+        # couchdb
+        couchdb_scheme: http
+        couchdb_host: 127.0.0.1
+        couchdb_admin_user: admin
+        # oauth2
+        # TODO Create actual resources and insert identifiers
+        oauth2_issuer_url: tbd
+        oauth2_client_id: tbd
+        oauth2_verify_issuer: "true"
+        oauth2_username_claim: email
+        oauth2_scopes: openid,email
