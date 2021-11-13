@@ -38,6 +38,16 @@ resource "oci_core_security_list" "private" {
     source   = local.private_cidr
   }
 
+  // allow funnel communication with load balancer
+  ingress_security_rules {
+    source   = local.public_cidr
+    protocol = "6"
+    tcp_options {
+      min = 3000
+      max = 3000
+    }
+  }
+
   // allow ssh from bastion hosts
   ingress_security_rules {
     source   = local.bastion_cidr

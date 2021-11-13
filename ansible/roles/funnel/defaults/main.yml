@@ -1,0 +1,7 @@
+funnel_version: ""
+funnel_package_url: "https://github.com/ThymeSave/funnel/releases/download/{{ funnel_version }}/funnel_linux-amd64-{{ funnel_version }}"
+funnel_checksum: ""
+funnel_checksum_type: sha256
+funnel_group: funnel
+funnel_user: funnel
+funnel_configuration: {}

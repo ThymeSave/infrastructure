@@ -46,4 +46,14 @@ resource "oci_core_security_list" "public" {
       max = 22
     }
   }
+
+  // allow loadbalancer htp
+  ingress_security_rules {
+    source   = "0.0.0.0/0"
+    protocol = "6"
+    tcp_options {
+      min = 80
+      max = 80
+    }
+  }
 }
