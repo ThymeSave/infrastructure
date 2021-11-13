@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 
 parser = argparse.ArgumentParser("Inventory generator")
 parser.add_argument("--bastion-id",
-                    default="ocid1.bastion.oc1.eu-frankfurt-1.amaaaaaayfpniiaa4d7af3vq2jlhycxvoxt7o7ofrf7b7oulwdpzmml2ah4q")
+                    default="ocid1.bastion.oc1.eu-frankfurt-1.amaaaaaayfpniiaapka6g3kzkurv6wudsrjjr7ujyh4b76jo2o7skshvghda")
 parser.add_argument("--compartment-id",
                     default="ocid1.tenancy.oc1..aaaaaaaaggzs7vxv6gfidm5uqngz72leypa5qlmkhksd3zeld4pq4qjwopqq")
 parser.add_argument("--username", default="opc")
@@ -36,6 +36,9 @@ hosts = []
 
 logging.info("Creating bastion sessions")
 for instance in compute.list_instances(args.compartment_id).data:
+    if instance.lifecycle_state == "TERMINATED":
+        continue
+
     logging.info(f"Creating bastion session for {instance.display_name}({instance.id}")
 
     session = bastion.create_session(

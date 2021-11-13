@@ -1,0 +1,38 @@
+- name: Ensure funnel group exists
+  ansible.builtin.group:
+    name: "{{ funnel_group }}"
+    gid: 2021
+  become: true
+
+- name: Ensure funnel user exists
+  ansible.builtin.user:
+    name: "{{ funnel_user }}"
+    uid: 2021
+    groups: "{{ funnel_group }}"
+  become: true
+
+- name: Download funnel binary
+  ansible.builtin.get_url:
+    url: "{{ funnel_package_url }}"
+    checksum: "{{ funnel_checksum_type }}:{{ funnel_checksum }}"
+    dest: /usr/local/bin/funnel
+    mode: '075'
+    owner: funnel
+    group: funnel
+    force: yes
+  become: true
+
+- name: Create funnel systemd unit file
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/funnel.service
+    owner: root
+    group: root
+  become: true
+
+- name: Ensure sytemd config is up to date
+  ansible.builtin.systemd:
+    name: funnel
+    daemon_reload: yes
+    state: restarted
+  become: true

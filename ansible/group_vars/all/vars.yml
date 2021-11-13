@@ -9,3 +9,7 @@ docker_compose_url: https://github.com/docker/compose/releases/download/{{ docke
 block_volume_device: /dev/sdb
 block_volume_user: opc
 block_volume_group: opc
+
+# funnel
+funnel_version: 0.0.2
+funnel_checksum: 34b0c905c1cc8ad7bc1ed3c6d9500e9336596a85a18b38436fd34934e4096348

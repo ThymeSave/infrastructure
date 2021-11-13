@@ -1,0 +1,12 @@
+[Unit]
+Description=Service to run Funnel
+Documentation=https://github.com/ThymeSave/funnel
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/funnel
+Restart=always
+RestartSec=5s
+{% for key in funnel_configuration %}
+Environment=FUNNEL_{{ key | upper }}={{ funnel_configuration[key] }}
+{% endfor %}

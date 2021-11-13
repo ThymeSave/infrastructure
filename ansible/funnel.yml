@@ -1,0 +1,19 @@
+- name: Setup Funnel
+  hosts: all
+  roles:
+    - role: funnel
+      funnel_package_url: "https://github.com/ThymeSave/funnel/releases/download/{{ funnel_version }}/funnel_linux-arm64-{{ funnel_version }}"
+      funnel_configuration:
+        # web
+        port: 3000
+        cors_origins: "*"
+        # couchdb
+        couchdb_scheme: http
+        couchdb_host: 127.0.0.1
+        couchdb_admin_user: admin
+        # oauth2
+        oauth2_issuer_url: "https://thymesave.eu.auth0.com/"
+        oauth2_client_id: client-name-goes-here # TODO Create client
+        oauth2_verify_issuer: "true"
+        oauth2_username_claim: email
+        oauth2_scopes: openid,email
