@@ -10,6 +10,7 @@
         # couchdb
         couchdb_scheme: http
         couchdb_host: 127.0.0.1
+        couchdb_port: 5984
         couchdb_admin_user: admin
         # oauth2
         oauth2_issuer_url: "https://thymesave.eu.auth0.com/"
