@@ -35,7 +35,15 @@ locals {
   bastion_cidr = "10.1.0.128/26"
   // .. free: 10.1.0.192/26
 
-  // Create one subnet for each availability domain
-  private_subnets = cidrsubnets(local.private_cidr, 4, 4, 4)
-  public_subnets  = cidrsubnets(local.public_cidr, 4, 4, 4)
+  private_subnets = [
+    "10.1.0.0/28",
+    "10.1.0.16/28",
+    "10.1.0.32/27"
+  ]
+  public_subnets = [
+    "10.1.0.64/28",
+    "10.1.0.80/28",
+    "10.1.0.96/27"
+  ]
+
 }
