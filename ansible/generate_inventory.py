@@ -41,6 +41,8 @@ for instance in compute.list_instances(args.compartment_id).data:
 
     logging.info(f"Creating bastion session for {instance.display_name}({instance.id}")
 
+    display_name = f"{getpass.getuser()}_{socket.getfqdn()}"
+    print(display_name)
     session = bastion.create_session(
         create_session_details=oci.bastion.models.CreateSessionDetails(
             bastion_id=args.bastion_id,
@@ -53,7 +55,7 @@ for instance in compute.list_instances(args.compartment_id).data:
             key_details=oci.bastion.models.PublicKeyDetails(
                 public_key_content=public_key
             ),
-            display_name=f"{getpass.getuser()}@{socket.getfqdn()}",
+            display_name=display_name,
             key_type="PUB",
             session_ttl_in_seconds=int(args.session_ttl)
         )
