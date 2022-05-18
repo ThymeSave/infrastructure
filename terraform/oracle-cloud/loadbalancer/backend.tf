@@ -8,7 +8,7 @@ resource "oci_load_balancer_backend_set" "this" {
     url_path            = "/health"
     interval_ms         = 1000
     return_code         = 200
-    timeout_in_millis   = 1000
+    timeout_in_millis   = 30000
     retries             = 3
   }
 
