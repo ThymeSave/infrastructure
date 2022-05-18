@@ -55,6 +55,7 @@
     - log.ini
     - couch_peruser.ini
     - proxy_auth.ini
+    - cors.ini
   register: create_configs
 
 - name: Ensure couchdb is up
@@ -127,6 +128,8 @@
         return_content: yes
       run_once: yes
       with_items: "{{ couchdb_nodes }}"
+      tags:
+       - repair-cluster
 
     - name: Finish cluster building
       ansible.builtin.uri:
@@ -140,4 +143,6 @@
         status_code: 201
         return_content: yes
       run_once: yes
-  when: not "cluster_finished" in cluster_status_response.content
+      failed_when: False
+      tags:
+       - repair-cluster
