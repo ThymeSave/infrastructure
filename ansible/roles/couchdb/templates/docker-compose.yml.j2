@@ -9,6 +9,8 @@ services:
         COUCHDB_PASSWORD: {{ couchdb_admin_password_hashed }}
         COUCHDB_SECRET: {{ couchdb_secret }}
         NODENAME: {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
+        COUCHDB_ERLANG_COOKIE: {{ couchdb_erlang_cookie }}
+        ERL_FLAGS: '-setcookie "{{ couchdb_erlang_cookie }}"'
       network_mode: host
       volumes:
         - ./data:/opt/couchdb/data
