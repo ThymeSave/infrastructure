@@ -20,6 +20,13 @@
         state: stopped
         enabled: no
       become: yes
+    - name: Increase ulimit for couchdb
+      community.general.pam_limits:
+        domain: opc
+        limit_type: soft
+        limit_item: nofile
+        value: 64000
+      become: yes
   roles:
     - role: python3_setup
       become: yes
