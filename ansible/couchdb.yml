@@ -3,6 +3,7 @@
   roles:
     - role: couchdb
       couchdb_version: 3.2.0
+      couchdb_uuid: 95d501838b47ead2c73fd199940d323f
       couchdb_admin_username: admin
       couchdb_admin_password: !vault |
         $ANSIBLE_VAULT;1.1;AES256

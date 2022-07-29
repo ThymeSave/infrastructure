@@ -11,6 +11,14 @@
     groups: "{{ funnel_group }}"
   become: true
 
+- name: Increase ulimit for funnel user
+  community.general.pam_limits:
+    domain: "{{ funnel_user }}"
+    limit_type: soft
+    limit_item: nofile
+    value: 64000
+  become: yes
+
 - name: Download funnel binary
   ansible.builtin.get_url:
     url: "{{ funnel_package_url }}"
