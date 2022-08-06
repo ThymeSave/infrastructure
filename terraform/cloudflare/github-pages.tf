@@ -3,6 +3,7 @@ locals {
     "www",
     "thymesave.app",
     "funnel.docs",
+    "docs",
     "design"
   ])
 }
