@@ -1,24 +1,24 @@
-resource "oci_load_balancer_backend_set" "this" {
-  name   = "nodes"
-  policy = "ROUND_ROBIN"
+resource "oci_network_load_balancer_backend_set" "this" {
   health_checker {
-    protocol            = "HTTP"
+    protocol            = "TCP"
+    interval_in_millis  = 9000
     port                = 3000
     response_body_regex = "."
-    url_path            = "/health"
-    interval_ms         = 1000
-    return_code         = 200
-    timeout_in_millis   = 30000
     retries             = 3
+    return_code         = 200
+    timeout_in_millis   = 3000
+    url_path            = "/health"
   }
-
-  load_balancer_id = oci_load_balancer.this.id
+  name                     = "nodes"
+  network_load_balancer_id = oci_network_load_balancer_network_load_balancer.this.id
+  policy                   = "FIVE_TUPLE"
 }
 
-resource "oci_load_balancer_backend" "this" {
-  count            = length(data.terraform_remote_state.compute.outputs.instance_ips)
-  backendset_name  = oci_load_balancer_backend_set.this.name
-  ip_address       = data.terraform_remote_state.compute.outputs.instance_ips[count.index]
-  load_balancer_id = oci_load_balancer.this.id
-  port             = 3000
+resource "oci_network_load_balancer_backend" "this" {
+  count                    = length(data.terraform_remote_state.compute.outputs.instance_ips)
+  backend_set_name         = oci_network_load_balancer_backend_set.this.name
+  network_load_balancer_id = oci_network_load_balancer_network_load_balancer.this.id
+  port                     = 3000
+  ip_address               = data.terraform_remote_state.compute.outputs.instance_ips[count.index]
 }
+
