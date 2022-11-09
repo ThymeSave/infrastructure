@@ -38,9 +38,9 @@ resource "oci_core_security_list" "private" {
     source   = local.private_cidr
   }
 
-  // allow funnel communication with load balancer
+  // allow funnel communication with network load balancer
   ingress_security_rules {
-    source   = local.public_cidr
+    source   = "0.0.0.0/0"
     protocol = "6"
     tcp_options {
       min = 3000
