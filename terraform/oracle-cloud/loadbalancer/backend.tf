@@ -12,6 +12,7 @@ resource "oci_network_load_balancer_backend_set" "this" {
   name                     = "nodes"
   network_load_balancer_id = oci_network_load_balancer_network_load_balancer.this.id
   policy                   = "FIVE_TUPLE"
+  is_preserve_source       = false
 }
 
 resource "oci_network_load_balancer_backend" "this" {
