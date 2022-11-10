@@ -29,7 +29,7 @@
     mode: '644'
   become: true
   register: create_docker_compose_config
-  notify: restart couchdb
+  notify: Restart couchdb
 
 - name: Create required directories
   ansible.builtin.file:
@@ -44,28 +44,24 @@
 
 - name: Create configs
   ansible.builtin.template:
-    src: "couchdb_config/{{ item }}.j2"
-    dest: "{{ couchdb_install_dir }}/config/{{ item }}"
+    src: "couchdb_config/{{ item }}.ini.j2"
+    dest: "{{ couchdb_install_dir }}/config/{{ item }}.ini"
     group: "{{ couchdb_group }}"
     owner: "{{ couchdb_user }}"
     mode: '644'
   become: true
-  notify: restart couchdb
-  with_items:
-    - log.ini
-    - couch_peruser.ini
-    - proxy_auth.ini
-    - cors.ini
-    - uuid.ini
+  notify: Restart couchdb
+  with_items: "{{ couchdb_configs }}"
   register: create_configs
 
 - name: Ensure couchdb is up
-  shell: docker-compose up -d # noqa 305 301 docker-compose module does not work without compose installed via pip
+  # noqa command-instead-of-shell no-changed-when docker-compose module does not work without compose installed via pip, up -d is idempotent by default
+  ansible.builtin.shell: docker-compose up -d
   args:
     chdir: "{{ couchdb_install_dir }}"
 
 - name: Wait for couchdb to start
-  wait_for:
+  ansible.builtin.wait_for:
     port: 5984
     delay: 2
 
@@ -90,7 +86,7 @@
         user: "{{ couchdb_admin_username }}"
         password: "{{ couchdb_admin_password }}"
         force_basic_auth: yes
-        body: "{{ lookup('template','requests/01-enable-cluster-init.json.j2') }}"
+        body: "{{ lookup('template', 'requests/01-enable-cluster-init.json.j2') }}"
         return_content: yes
       register: response_cluster_setup
       failed_when: response_cluster_setup.status != 200 and 'Cluster is already enabled' not in response_cluster_setup.content
@@ -108,7 +104,7 @@
         user: "{{ couchdb_admin_username }}"
         password: "{{ couchdb_admin_password }}"
         force_basic_auth: yes
-        body: "{{ lookup('template','requests/02-configure-cluster-node.json.j2') }}"
+        body: "{{ lookup('template', 'requests/02-configure-cluster-node.json.j2') }}"
         status_code: 201
         return_content: yes
       run_once: yes
@@ -122,7 +118,7 @@
         user: "{{ couchdb_admin_username }}"
         password: "{{ couchdb_admin_password }}"
         force_basic_auth: yes
-        body: "{{ lookup('template','requests/03-join-node.json.j2') }}"
+        body: "{{ lookup('template', 'requests/03-join-node.json.j2') }}"
         status_code:
           - 201 # join success
           - 409 # already joined
@@ -130,7 +126,7 @@
       run_once: yes
       with_items: "{{ couchdb_nodes }}"
       tags:
-       - repair-cluster
+        - repair-cluster
 
     - name: Finish cluster building
       ansible.builtin.uri:
@@ -140,10 +136,10 @@
         user: "{{ couchdb_admin_username }}"
         password: "{{ couchdb_admin_password }}"
         force_basic_auth: yes
-        body: "{{ lookup('template','requests/04-finish-setup.json.j2') }}"
+        body: "{{ lookup('template', 'requests/04-finish-setup.json.j2') }}"
         status_code: 201
         return_content: yes
       run_once: yes
       failed_when: False
       tags:
-       - repair-cluster
+        - repair-cluster

@@ -9,3 +9,15 @@ couchdb_secret: ""
 couchdb_cluster_uuid: ""
 couchdb_cluster_nodes: []
 couchdb_log_level: "info"
+couchdb_configs:
+  - log
+  - couch_peruser
+  - proxy_auth
+  - cors
+  - uuid
+  - compaction
+couchdb_compaction_ratio: 2.0
+couchdb_compaction_bytes: 134217728
+couchdb_compaction_start_time: "00:00"
+couchdb_compaction_end_time: "04:00"
+couchdb_compaction_strict: false

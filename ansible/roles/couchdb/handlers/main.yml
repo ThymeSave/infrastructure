@@ -1,5 +1,6 @@
 ---
-- name: restart couchdb
-  shell: docker-compose up --force-recreate -d # noqa 305 docker-compose module does not work without compose installed via pip
+- name: Restart couchdb
+  # noqa command-instead-of-shell docker-compose module does not work without compose installed via pip
+  ansible.builtin.shell: docker-compose up --force-recreate -d
   args:
     chdir: "{{ couchdb_install_dir }}"

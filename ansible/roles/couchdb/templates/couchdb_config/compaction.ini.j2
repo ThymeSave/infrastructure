@@ -1,0 +1,31 @@
+[smoosh]
+db_channels = upgrade_dbs,ratio_dbs,slack_dbs
+view_channels = upgrade_views,ratio_views,slack_views
+
+[smoosh.ratio_dbs]
+priority = ratio
+min_priority = {{ '%0.2f' | format(couchdb_compaction_ratio | float)  }}
+from = {{ couchdb_compaction_start_time }}
+to = {{ couchdb_compaction_end_time }}
+strict_window = {{ couchdb_compaction_strict | lower }}
+
+[smoosh.ratio_views]
+priority = ratio
+min_priority = {{ '%0.2f' | format(couchdb_compaction_ratio | float)  }}
+from = {{ couchdb_compaction_start_time }}
+to = {{ couchdb_compaction_end_time }}
+strict_window = {{ couchdb_compaction_strict | lower }}
+
+[smoosh.slack_dbs]
+priority = slack
+min_priority = {{ couchdb_compaction_bytes }}
+from = {{ couchdb_compaction_start_time }}
+to = {{ couchdb_compaction_end_time }}
+strict_window = {{ couchdb_compaction_strict | lower }}
+
+[smoosh.slack_views]
+priority = slack
+min_priority = {{ couchdb_compaction_bytes }}
+from = {{ couchdb_compaction_start_time }}
+to = {{ couchdb_compaction_end_time }}
+strict_window = {{ couchdb_compaction_strict | lower }}
